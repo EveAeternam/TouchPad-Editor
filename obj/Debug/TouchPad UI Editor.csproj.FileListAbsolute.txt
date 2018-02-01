@@ -1,0 +1,12 @@
+c:\users\eroxy\source\repos\TouchPad UI Editor\TouchPad UI Editor\bin\Debug\TouchPad UI Editor.exe.config
+c:\users\eroxy\source\repos\TouchPad UI Editor\TouchPad UI Editor\bin\Debug\TouchPad UI Editor.exe
+c:\users\eroxy\source\repos\TouchPad UI Editor\TouchPad UI Editor\bin\Debug\TouchPad UI Editor.pdb
+c:\users\eroxy\source\repos\TouchPad UI Editor\TouchPad UI Editor\obj\Debug\TouchPad UI Editor.csprojResolveAssemblyReference.cache
+c:\users\eroxy\source\repos\TouchPad UI Editor\TouchPad UI Editor\obj\Debug\TouchPad_UI_Editor.About.resources
+c:\users\eroxy\source\repos\TouchPad UI Editor\TouchPad UI Editor\obj\Debug\TouchPad_UI_Editor.Preview.resources
+c:\users\eroxy\source\repos\TouchPad UI Editor\TouchPad UI Editor\obj\Debug\TouchPad_UI_Editor.Properties.Resources.resources
+c:\users\eroxy\source\repos\TouchPad UI Editor\TouchPad UI Editor\obj\Debug\TouchPad UI Editor.csproj.GenerateResource.Cache
+c:\users\eroxy\source\repos\TouchPad UI Editor\TouchPad UI Editor\obj\Debug\TouchPad UI Editor.csproj.CoreCompileInputs.cache
+c:\users\eroxy\source\repos\TouchPad UI Editor\TouchPad UI Editor\obj\Debug\TouchPad UI Editor.exe
+c:\users\eroxy\source\repos\TouchPad UI Editor\TouchPad UI Editor\obj\Debug\TouchPad UI Editor.pdb
+c:\users\eroxy\source\repos\TouchPad UI Editor\TouchPad UI Editor\obj\Debug\TouchPad_UI_Editor.MainWindow.resources
