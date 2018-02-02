@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Net;
 using System.IO;
 using System.IO.Ports;
+using System.IO.Compression;
 
 namespace TouchPad_UI_Editor
 {
@@ -17,10 +18,15 @@ namespace TouchPad_UI_Editor
     {
         Preview prev = new Preview();
 
+        // FIRMWARE INFO
+        FirmWare firmware = new FirmWare();
+
+        public Button[] buttons;
+
         public string[] buttons_name = { "1", "2", "3", "4" };
         public string[] buttons_key = { "", "", "", "" };
 
-        public string[] keycodes = { "", "", "", "" };
+        //public string[] keycodes = { "", "", "", "" };
 
         public int[] tft_dimension = { 1, 1 };
         public int tft_spacing = 0;
@@ -39,6 +45,11 @@ namespace TouchPad_UI_Editor
             //Get latest Version from GitHub
             lbl_latestVer.Text = GetVersion();
 
+            //Set Labels
+            lbl_fw.Text = "Load a Firmware file...";
+            lbl_fwVer.Text = "N/A";
+            lbl_latestVer.Text = "";
+
             //Get the COM Ports
             GetComs();
 
@@ -49,7 +60,12 @@ namespace TouchPad_UI_Editor
             SetButtonPrev();
 
             //Populate Butoon List
-            PopBtnList(buttons_name);
+            buttons = new Button[4];
+            buttons[0] = new Button();
+            buttons[1] = new Button();
+            buttons[2] = new Button();
+            buttons[3] = new Button();
+            PopBtnList(buttons);
 
             //Select the first Button in list so something is selected
             lb_buttons.SelectedIndex = 0;
@@ -70,11 +86,11 @@ namespace TouchPad_UI_Editor
             }
         }
 
-        private void PopBtnList(string[] btns)
+        private void PopBtnList(Button[] btns)
         {
-            foreach (string button in btns)
+            foreach (Button button in btns)
             {
-                lb_buttons.Items.Add(button);
+                lb_buttons.Items.Add(button.label);
             }
         }
 
@@ -259,19 +275,150 @@ namespace TouchPad_UI_Editor
             prev = new Preview();
             prev.Show();
         }
+
+        private void loadFirmwareToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            diag_LoadFW.ShowDialog();
+            if(File.Exists(diag_LoadFW.FileName))
+            {
+                firmware.path = diag_LoadFW.FileName;
+                LoadFirmware();
+            }
+            
+        }
+
+        private void LoadFirmware()
+        {
+            firmware.UnpackFirmware();
+            lbl_fw.Text = firmware.path;
+            lbl_fwVer.Text = firmware.version;
+            lbl_latestVer.Text = firmware.LatestVersion();
+            if (firmware.latestVer == firmware.version)
+            {
+                btn_updateFw.Enabled = false;
+            } else
+            {
+                btn_updateFw.Enabled = true;
+            }
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            About about = new About();
+            about.Show();
+        }
     }
 
     public class Button
     {
-        private string label = "";
-        private int[] size = { 1, 1 };
-        private int[] pos = { 1, 1 };
-        private string[] keys;
-        private string color = "";
+        public Button()
+        {
+
+        }
+
+        public string label = "";
+        public int[] size = { 1, 1 };
+        public int[] pos = { 1, 1 };
+        public string[] keys = { "" };
+        public Color color = Color.White;
+    }
+
+    public class FirmWare
+    {
+        public string path = "";
+        public string version = "";
+        public string git = "";
+        public string latestVer = "";
+        public string[] instructions;
+        public Function[] functions;
+
+        public void UnpackFirmware()
+        {
+            string tempPath = Path.GetTempPath() + "TouchPadEditor/";
+            if (!Directory.Exists(tempPath))
+            {
+                Directory.CreateDirectory(tempPath);
+            } else
+            {
+                Directory.Delete(tempPath, true);
+                Directory.CreateDirectory(tempPath);
+            }
+            ZipFile.ExtractToDirectory(this.path, tempPath);
+
+            try
+            {
+                
+                this.version = File.ReadAllText(tempPath + "version");
+                this.git = File.ReadAllText(tempPath + "git");
+                this.latestVer = this.GetLatestVersion(this.git);
+
+                Console.WriteLine("Latest version available: " + this.latestVer);
+
+                this.instructions = File.ReadAllLines(tempPath + "instructions");
+                this.functions = new Function[this.instructions.Length];
+
+                /*foreach (string instruction in this.instructions)
+                {
+                    Console.WriteLine(instruction);
+                    this.functions[n].name = instruction; 
+                    this.functions[n].line = File.ReadAllLines(tempPath + instruction);
+                    n++;
+                }*/
+                for (int i=0; i < this.instructions.Length; i++)
+                {
+                    this.functions[i].Set(this.instructions[i],instructions);
+                    Console.WriteLine(this.functions[i].funcname);
+                }
+
+                
+
+                
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("The file could not be read:");
+                Console.WriteLine(e.Message);
+            }
+            
+        }
+
+        public string GetLatestVersion(string giturl)
+        {
+            string url = "https://raw.githubusercontent.com" + giturl + "latest";
+            string v = "0.0.0 (error)";
+            using (WebClient client = new WebClient())
+            {
+                v = client.DownloadString(url);
+            }
+            return v;
+        }
+
+        public string LatestVersion()
+        {
+            string url = "https://raw.githubusercontent.com" + this.git + "latest";
+            string v = "0.0.0 (error)";
+            using (WebClient client = new WebClient())
+            {
+                v = client.DownloadString(url);
+            }
+            return v;
+        }
     }
 
     public class TFTScreen
     {
         public Color bgColor = Color.Black;
+    }
+
+    public class Function
+    {
+        public string funcname = "";
+        public string[] line;
+
+        public void Set(string n, string[] l)
+        {
+            this.funcname = n;
+            this.line = l;
+        }
     }
 }

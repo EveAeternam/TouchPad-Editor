@@ -32,15 +32,17 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadFirmwareToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.configurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.windowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.previewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.configurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabSoft = new System.Windows.Forms.TabPage();
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.tb_code = new System.Windows.Forms.RichTextBox();
             this.btn_Auto = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -48,13 +50,12 @@
             this.cb_COM = new System.Windows.Forms.ComboBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.lbl_latestVer = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
+            this.lbl_fwVer = new System.Windows.Forms.Label();
+            this.lbl_fw = new System.Windows.Forms.Label();
+            this.lbl_hw = new System.Windows.Forms.Label();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.btn_updateFw = new System.Windows.Forms.Button();
+            this.btn_factoryFw = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -110,6 +111,7 @@
             this.diag_LoadConfig = new System.Windows.Forms.OpenFileDialog();
             this.diag_SaveConfig = new System.Windows.Forms.SaveFileDialog();
             this.diag_BtnColor = new System.Windows.Forms.ColorDialog();
+            this.diag_LoadFW = new System.Windows.Forms.OpenFileDialog();
             this.menuStrip.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabSoft.SuspendLayout();
@@ -138,8 +140,8 @@
             // 
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.windowsToolStripMenuItem,
-            this.configurationToolStripMenuItem});
+            this.configurationToolStripMenuItem,
+            this.windowsToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Size = new System.Drawing.Size(773, 24);
@@ -148,14 +150,30 @@
             // 
             // fileToolStripMenuItem
             // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.loadFirmwareToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
             // 
+            // loadFirmwareToolStripMenuItem
+            // 
+            this.loadFirmwareToolStripMenuItem.Name = "loadFirmwareToolStripMenuItem";
+            this.loadFirmwareToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.loadFirmwareToolStripMenuItem.Text = "Load Firmware...";
+            this.loadFirmwareToolStripMenuItem.Click += new System.EventHandler(this.loadFirmwareToolStripMenuItem_Click);
+            // 
+            // configurationToolStripMenuItem
+            // 
+            this.configurationToolStripMenuItem.Name = "configurationToolStripMenuItem";
+            this.configurationToolStripMenuItem.Size = new System.Drawing.Size(93, 20);
+            this.configurationToolStripMenuItem.Text = "Configuration";
+            // 
             // windowsToolStripMenuItem
             // 
             this.windowsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.previewToolStripMenuItem});
+            this.previewToolStripMenuItem,
+            this.aboutToolStripMenuItem});
             this.windowsToolStripMenuItem.Name = "windowsToolStripMenuItem";
             this.windowsToolStripMenuItem.Size = new System.Drawing.Size(68, 20);
             this.windowsToolStripMenuItem.Text = "Windows";
@@ -163,15 +181,16 @@
             // previewToolStripMenuItem
             // 
             this.previewToolStripMenuItem.Name = "previewToolStripMenuItem";
-            this.previewToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.previewToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
             this.previewToolStripMenuItem.Text = "Preview";
             this.previewToolStripMenuItem.Click += new System.EventHandler(this.previewToolStripMenuItem_Click);
             // 
-            // configurationToolStripMenuItem
+            // aboutToolStripMenuItem
             // 
-            this.configurationToolStripMenuItem.Name = "configurationToolStripMenuItem";
-            this.configurationToolStripMenuItem.Size = new System.Drawing.Size(93, 20);
-            this.configurationToolStripMenuItem.Text = "Configuration";
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.aboutToolStripMenuItem.Text = "About";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // tabControl1
             // 
@@ -190,7 +209,7 @@
             this.tabSoft.Controls.Add(this.button4);
             this.tabSoft.Controls.Add(this.button5);
             this.tabSoft.Controls.Add(this.button6);
-            this.tabSoft.Controls.Add(this.richTextBox1);
+            this.tabSoft.Controls.Add(this.tb_code);
             this.tabSoft.Controls.Add(this.btn_Auto);
             this.tabSoft.Controls.Add(this.label9);
             this.tabSoft.Controls.Add(this.label5);
@@ -234,15 +253,15 @@
             this.button6.Text = "Load Config...";
             this.button6.UseVisualStyleBackColor = true;
             // 
-            // richTextBox1
+            // tb_code
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(3, 218);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.ReadOnly = true;
-            this.richTextBox1.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
-            this.richTextBox1.Size = new System.Drawing.Size(749, 230);
-            this.richTextBox1.TabIndex = 9;
-            this.richTextBox1.Text = resources.GetString("richTextBox1.Text");
+            this.tb_code.Location = new System.Drawing.Point(3, 218);
+            this.tb_code.Name = "tb_code";
+            this.tb_code.ReadOnly = true;
+            this.tb_code.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
+            this.tb_code.Size = new System.Drawing.Size(749, 230);
+            this.tb_code.TabIndex = 9;
+            this.tb_code.Text = "";
             // 
             // btn_Auto
             // 
@@ -294,9 +313,9 @@
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.lbl_latestVer);
-            this.groupBox3.Controls.Add(this.label6);
-            this.groupBox3.Controls.Add(this.label7);
-            this.groupBox3.Controls.Add(this.label8);
+            this.groupBox3.Controls.Add(this.lbl_fwVer);
+            this.groupBox3.Controls.Add(this.lbl_fw);
+            this.groupBox3.Controls.Add(this.lbl_hw);
             this.groupBox3.Controls.Add(this.flowLayoutPanel1);
             this.groupBox3.Controls.Add(this.label4);
             this.groupBox3.Controls.Add(this.label3);
@@ -319,72 +338,64 @@
             this.lbl_latestVer.TabIndex = 9;
             this.lbl_latestVer.Text = "#?#";
             // 
-            // label6
+            // lbl_fwVer
             // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(209, 56);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(49, 20);
-            this.label6.TabIndex = 8;
-            this.label6.Text = "1.0.0";
+            this.lbl_fwVer.AutoSize = true;
+            this.lbl_fwVer.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_fwVer.Location = new System.Drawing.Point(209, 56);
+            this.lbl_fwVer.Name = "lbl_fwVer";
+            this.lbl_fwVer.Size = new System.Drawing.Size(49, 20);
+            this.lbl_fwVer.TabIndex = 8;
+            this.lbl_fwVer.Text = "1.0.0";
             // 
-            // label7
+            // lbl_fw
             // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(209, 36);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(161, 20);
-            this.label7.TabIndex = 7;
-            this.label7.Text = "RotoCop_-1-0-0.fw";
+            this.lbl_fw.AutoSize = true;
+            this.lbl_fw.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_fw.Location = new System.Drawing.Point(209, 36);
+            this.lbl_fw.Name = "lbl_fw";
+            this.lbl_fw.Size = new System.Drawing.Size(155, 20);
+            this.lbl_fw.TabIndex = 7;
+            this.lbl_fw.Text = "RotoCop_1-0-0.fw";
             // 
-            // label8
+            // lbl_hw
             // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(209, 16);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(156, 20);
-            this.label8.TabIndex = 6;
-            this.label8.Text = "TouchPad Arduino";
+            this.lbl_hw.AutoSize = true;
+            this.lbl_hw.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_hw.Location = new System.Drawing.Point(209, 16);
+            this.lbl_hw.Name = "lbl_hw";
+            this.lbl_hw.Size = new System.Drawing.Size(156, 20);
+            this.lbl_hw.TabIndex = 6;
+            this.lbl_hw.Text = "TouchPad Arduino";
             // 
             // flowLayoutPanel1
             // 
-            this.flowLayoutPanel1.Controls.Add(this.button1);
-            this.flowLayoutPanel1.Controls.Add(this.button2);
-            this.flowLayoutPanel1.Controls.Add(this.button3);
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(10, 104);
+            this.flowLayoutPanel1.Controls.Add(this.btn_updateFw);
+            this.flowLayoutPanel1.Controls.Add(this.btn_factoryFw);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(10, 124);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(503, 61);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(503, 41);
             this.flowLayoutPanel1.TabIndex = 5;
             // 
-            // button1
+            // btn_updateFw
             // 
-            this.button1.Location = new System.Drawing.Point(3, 3);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(162, 49);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "Update To Latest Version";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btn_updateFw.Enabled = false;
+            this.btn_updateFw.Location = new System.Drawing.Point(3, 3);
+            this.btn_updateFw.Name = "btn_updateFw";
+            this.btn_updateFw.Size = new System.Drawing.Size(162, 32);
+            this.btn_updateFw.TabIndex = 4;
+            this.btn_updateFw.Text = "Update To Latest Version";
+            this.btn_updateFw.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // btn_factoryFw
             // 
-            this.button2.Location = new System.Drawing.Point(171, 3);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(149, 49);
-            this.button2.TabIndex = 5;
-            this.button2.Text = "Flash Custom Firmware";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(326, 3);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(172, 49);
-            this.button3.TabIndex = 6;
-            this.button3.Text = "Revert to Factory Firmware";
-            this.button3.UseVisualStyleBackColor = true;
+            this.btn_factoryFw.Enabled = false;
+            this.btn_factoryFw.Location = new System.Drawing.Point(171, 3);
+            this.btn_factoryFw.Name = "btn_factoryFw";
+            this.btn_factoryFw.Size = new System.Drawing.Size(172, 32);
+            this.btn_factoryFw.TabIndex = 6;
+            this.btn_factoryFw.Text = "Revert to Factory Firmware";
+            this.btn_factoryFw.UseVisualStyleBackColor = true;
             // 
             // label4
             // 
@@ -681,7 +692,7 @@
             this.tb_rows.Orientation = System.Windows.Forms.Orientation.Vertical;
             this.tb_rows.Size = new System.Drawing.Size(45, 322);
             this.tb_rows.TabIndex = 4;
-            this.tb_rows.Value = 1;
+            this.tb_rows.Value = 2;
             this.tb_rows.Scroll += new System.EventHandler(this.tb_rows_Scroll);
             // 
             // tb_columns
@@ -693,7 +704,7 @@
             this.tb_columns.Name = "tb_columns";
             this.tb_columns.Size = new System.Drawing.Size(322, 45);
             this.tb_columns.TabIndex = 3;
-            this.tb_columns.Value = 1;
+            this.tb_columns.Value = 2;
             this.tb_columns.Scroll += new System.EventHandler(this.tb_columns_Scroll);
             // 
             // label10
@@ -1109,6 +1120,12 @@
             // 
             this.diag_LoadConfig.FileName = "openFileDialog1";
             // 
+            // diag_LoadFW
+            // 
+            this.diag_LoadFW.DefaultExt = "fw";
+            this.diag_LoadFW.Filter = "TouchPad Firmware|*.fw";
+            this.diag_LoadFW.Title = "Load Firmware...";
+            // 
             // MainWindow
             // 
             this.AllowDrop = true;
@@ -1118,6 +1135,7 @@
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.menuStrip);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip;
             this.Name = "MainWindow";
             this.Text = "TouchPad UI Editor";
@@ -1170,13 +1188,12 @@
         private System.Windows.Forms.ListBox lb_buttons;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Label lbl_latestVer;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label lbl_fwVer;
+        private System.Windows.Forms.Label lbl_fw;
+        private System.Windows.Forms.Label lbl_hw;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btn_updateFw;
+        private System.Windows.Forms.Button btn_factoryFw;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
@@ -1188,7 +1205,7 @@
         private System.Windows.Forms.ComboBox cb_baud;
         private System.Windows.Forms.ComboBox cb_COM;
         private System.Windows.Forms.Button btn_Auto;
-        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.RichTextBox tb_code;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button6;
@@ -1238,6 +1255,9 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Label lbl_mismatchWarning;
         private System.Windows.Forms.ToolStripMenuItem previewToolStripMenuItem;
+        private System.Windows.Forms.OpenFileDialog diag_LoadFW;
+        private System.Windows.Forms.ToolStripMenuItem loadFirmwareToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
     }
 }
 

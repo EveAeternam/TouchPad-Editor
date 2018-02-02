@@ -35,9 +35,14 @@
     <StartupObject>
     </StartupObject>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>editor.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -97,7 +102,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="RotoCop_tp-1-0-0.fw" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -106,13 +110,18 @@
     <None Include="Resources\ard_tft.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\4535shield.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\tft_land.jpg" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\tft_port.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="editor.ico" />
+    <None Include="Resources\editor-icon2.png" />
+    <None Include="Resources\editor-icon1.png" />
+    <None Include="Resources\editor-icon.png" />
+    <None Include="Resources\editor.ico" />
+    <None Include="Resources\editor_icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
